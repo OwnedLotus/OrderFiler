@@ -1,29 +1,21 @@
 namespace OrderFiler.Models;
 
-class Order : IComparable<Order>
+class Order(uint on, string po, bool ip) : IComparable<Order>
 {
 
     private DateTime orderEntered = DateTime.Now;
 
-    public uint OrderNumber { get; set; }
-    public string? PONumber { get; set; }
+    public bool IsPulled { get; set; } = ip;
+    public uint OrderNumber { get; set; } = on;
+    public string? PONumber { get; set; } = po;
     public DateTime OrderEntered
     {
         get => orderEntered;
     }
 
 
-    public Order(uint on, string po)
-    {
-        this.OrderNumber = on;
-        this.PONumber = po;
-    }
-
-
     public int CompareTo(Order obj)
     {
-        if (this.OrderNumber < obj.OrderNumber) return -1;
-        if (this.OrderNumber == obj.OrderNumber) return 0;
-        return 0;
+        return this.OrderNumber.CompareTo(obj.OrderNumber);
     }
 }

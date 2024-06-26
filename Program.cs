@@ -8,9 +8,35 @@ while (true)
     var OrderNumberIn = Console.ReadLine();
 
     if (OrderNumberIn == "q") QuitProgram();
+    if (OrderNumberIn == "list")
+    {
+        orders.DisplayAllOrders();
+        continue;
+    } 
 
     Console.WriteLine("Please Enter the PO Number");
     var PONumberIn = Console.ReadLine();
+
+
+    var failed = false;
+    bool check = false;
+    do
+    {
+        System.Console.WriteLine("Is the order pulled?");
+        var checkedIn = Console.ReadLine();
+
+        if (checkedIn == "t" || checkedIn == "T")
+        {
+            check = true;
+        } else if (checkedIn == "f" || checkedIn == "F")
+        {
+            check = false;
+        }
+        else
+        {
+            failed = true;
+        }
+    } while (failed);
 
 
     uint parsedValue = 1;
@@ -24,7 +50,7 @@ while (true)
     if (success)
     {
         if (PONumberIn is not null)
-            orders.AddOrder(new Order(parsedValue, PONumberIn));
+            orders.AddOrder(new Order(parsedValue, PONumberIn, check));
         else
             Console.WriteLine("PO is null");
     }
