@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace OrderFiler.Models;
 
 class OrderCurrier
@@ -9,24 +11,16 @@ class OrderCurrier
         orderSet = new SortedSet<Order>();
     }
 
-    public bool AddOrder(Order? order)
+    public bool AddOrder(Order order)
     {
-        if (order is not null)
+        var success = orderSet.Add(order);
+        if (success)
         {
-            var success = orderSet.Add(order);
-            if (success)
-            {
-                return success;
-            }
-            else
-            {
-                System.Console.WriteLine("Order Duplicated");
-                return false;
-            }
+            return success;
         }
         else
         {
-            System.Console.WriteLine("Entry Failed because of Null Order");   
+            System.Console.WriteLine("Order Duplicated");
             return false;
         }
     }
@@ -36,8 +30,32 @@ class OrderCurrier
         System.Console.WriteLine("---------------------------");
         foreach (var order in orderSet)
         {
-            System.Console.WriteLine(order.OrderNumber + " / " + order.PONumber + $" / Pulled? {order.IsPulled}");
+            order.DisplayOrder();
         }
         System.Console.WriteLine("---------------------------");
+    }
+
+    public void GetOrder(uint ordernum)
+    {
+        var order = orderSet.Single(ord => ord.OrderNumber == ordernum);
+        order.DisplayOrder();
+    }
+
+    public void GetOrder(string ponumber)
+    {
+        var order = orderSet.Single(ord => ord.PONumber == ponumber);
+        order.DisplayOrder();
+    }
+
+    public void RemoveOrder(uint ordernum)
+    {
+        orderSet.RemoveWhere(order => order.OrderNumber == ordernum);
+        System.Console.WriteLine("Successfully removed Order");
+    }
+
+    public void RemoveOrder(string po)
+    {
+        orderSet.RemoveWhere(order => order.PONumber == po);
+        System.Console.WriteLine("Successfully removed Order");
     }
 }

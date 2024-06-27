@@ -1,6 +1,14 @@
 namespace OrderFiler.Models;
 
-class Order(uint on, string po, bool ip) : IComparable<Order>
+public enum ShippingMethod
+{
+    CPUP,
+    BACKORDER,
+    SHIPPING
+}
+
+
+class Order(uint on, string po, bool ip, ShippingMethod m) : IComparable<Order>
 {
 
     private DateTime orderEntered = DateTime.Now;
@@ -8,14 +16,23 @@ class Order(uint on, string po, bool ip) : IComparable<Order>
     public bool IsPulled { get; set; } = ip;
     public uint OrderNumber { get; set; } = on;
     public string? PONumber { get; set; } = po;
+    public ShippingMethod Method { get; set; } = m;
     public DateTime OrderEntered
     {
         get => orderEntered;
     }
 
 
-    public int CompareTo(Order obj)
+    public int CompareTo(Order? obj)
     {
-        return this.OrderNumber.CompareTo(obj.OrderNumber);
+        if (obj is not null)
+            return this.OrderNumber.CompareTo(obj.OrderNumber);
+    
+        return 0;
+    }
+
+    public void DisplayOrder()
+    {
+            System.Console.WriteLine(this.OrderNumber + " / " + this.PONumber + $" / Pulled? {this.IsPulled}");
     }
 }
