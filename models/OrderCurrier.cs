@@ -6,6 +6,7 @@ namespace OrderFiler.Models;
 class OrderCurrier
 {
     private SortedSet<Order> orderSet;
+    private string dbName = "database.json";
 
     public OrderCurrier()
     {
@@ -63,10 +64,22 @@ class OrderCurrier
     // there is no need for security
     public void SaveOrders()
     {
+
+
+        string jsonOrderCollection = "";
+
         foreach (var order in orderSet)
         {
-            var jsonOrder = JsonSerializer.Serialize(order);
-            Console.WriteLine(jsonOrder);
+            jsonOrderCollection += JsonSerializer.Serialize(order);
+            jsonOrderCollection += '\n';
         }
+
+        File.WriteAllText(jsonOrderCollection, dbName);
+
+    }
+
+    public void LoadOrders()
+    {
+
     }
 }
