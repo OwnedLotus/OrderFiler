@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json;
 
 namespace OrderFiler.Models;
 
@@ -44,7 +45,6 @@ class OrderCurrier
     public void GetOrder(string ponumber)
     {
         var order = orderSet.Single(ord => ord.PONumber == ponumber);
-        order.DisplayOrder();
     }
 
     public void RemoveOrder(uint ordernum)
@@ -57,5 +57,16 @@ class OrderCurrier
     {
         orderSet.RemoveWhere(order => order.PONumber == po);
         System.Console.WriteLine("Successfully removed Order");
+    }
+
+    // intend for plaintext json database
+    // there is no need for security
+    public void SaveOrders()
+    {
+        foreach (var order in orderSet)
+        {
+            var jsonOrder = JsonSerializer.Serialize(order);
+            Console.WriteLine(jsonOrder);
+        }
     }
 }

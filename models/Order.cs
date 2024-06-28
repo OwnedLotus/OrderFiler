@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace OrderFiler.Models;
 
 public enum ShippingMethod
@@ -33,6 +35,10 @@ class Order(uint on, string po, bool ip, ShippingMethod m) : IComparable<Order>
 
     public void DisplayOrder()
     {
-            System.Console.WriteLine($"{this.OrderNumber} / {this.PONumber} / Shipping: {this.Method} / Pulled? {this.IsPulled}");
+        // System.Console.WriteLine(JsonSerializer.Serialize(this));
+
+
+
+        // System.Console.WriteLine($"{this.OrderNumber} / {this.PONumber} / Shipping: {this.Method} / Pulled? {this.IsPulled}");
     }
 }
