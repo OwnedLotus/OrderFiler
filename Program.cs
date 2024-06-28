@@ -13,8 +13,13 @@ while (true)
             orders.DisplayAllOrders();
         break;
         case "search":
+            FindOrder();
         break;
+        case "Edit":
+            EditOrder();
+            break;
         case "remove":
+            RemoveMenu();
         break;
         case "add":
             AddOrders();
@@ -26,17 +31,6 @@ while (true)
         break;
     }
 }
-
-
-
-    // if (OrderNumberIn == "list")
-    // {
-    //     orders.DisplayAllOrders();
-    //     continue;
-    // } 
-    // if (OrderNumberIn == "remove") {}
-    // if (OrderNumberIn == "edit") {}
-    // if (OrderNumberIn == "search")
 
 
 void QuitProgram()
@@ -124,4 +118,48 @@ void AddOrders()
     else
         Console.WriteLine("Order Failed to be registered");
     }
+}
+
+void FindOrder()
+{
+    do
+    {
+        System.Console.WriteLine("Sales Order or PO Number");
+        var response = Console.ReadLine();
+        if (response == "S" || response == "s")
+        {
+            System.Console.WriteLine("Enter The Order Number");
+            var input = Console.ReadLine();
+            uint result;
+
+            var success = uint.TryParse(input, out result);
+            if (success)
+                orders.GetOrder(result);
+            else
+                System.Console.WriteLine("Failed to find order");
+        } 
+        else if (response == "P" || response == "p")
+        {
+            System.Console.WriteLine("Enter The PO Number");
+            var input = Console.ReadLine();
+            uint result;
+
+            var success = uint.TryParse(input, out result);
+            if (success)
+                orders.GetOrder(result);
+            else
+                System.Console.WriteLine("Failed to find order");
+        }
+
+    } while (true);
+}
+
+void RemoveMenu()
+{
+
+}
+
+void EditOrder()
+{
+    throw new NotImplementedException();
 }
