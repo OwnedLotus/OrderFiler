@@ -1,12 +1,12 @@
-using System.Linq;
 using System.Text.Json;
 
 namespace OrderFiler.Models;
 
 class OrderCurrier
 {
+    string jsonOrderCollection = String.Empty;
     private SortedSet<Order> orderSet;
-    private string dbName = "database.json";
+    private string pathToDB = Environment.CurrentDirectory.ToString() + "database.json";
 
     public OrderCurrier()
     {
@@ -64,22 +64,19 @@ class OrderCurrier
     // there is no need for security
     public void SaveOrders()
     {
-
-
-        string jsonOrderCollection = "";
-
         foreach (var order in orderSet)
         {
             jsonOrderCollection += JsonSerializer.Serialize(order);
             jsonOrderCollection += '\n';
         }
 
-        File.WriteAllText(jsonOrderCollection, dbName);
-
+        File.WriteAllText(jsonOrderCollection, pathToDB);
     }
 
     public void LoadOrders()
     {
+        File.ReadAllLines(pathToDB);
+
 
     }
 }
