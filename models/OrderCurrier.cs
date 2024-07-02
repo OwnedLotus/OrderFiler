@@ -22,19 +22,19 @@ class OrderCurrier
         }
         else
         {
-            System.Console.WriteLine("Order Duplicated");
+            Console.WriteLine("Order Duplicated");
             return false;
         }
     }
 
     public void DisplayAllOrders()
     {
-        System.Console.WriteLine("---------------------------");
+        Console.WriteLine("---------------------------");
         foreach (var order in orderSet)
         {
             order.DisplayOrder();
         }
-        System.Console.WriteLine("---------------------------");
+        Console.WriteLine("---------------------------");
     }
 
     public void GetOrder(uint ordernum)
@@ -51,13 +51,13 @@ class OrderCurrier
     public void RemoveOrder(uint ordernum)
     {
         orderSet.RemoveWhere(order => order.OrderNumber == ordernum);
-        System.Console.WriteLine("Successfully removed Order");
+        Console.WriteLine("Successfully removed Order");
     }
 
     public void RemoveOrder(string po)
     {
         orderSet.RemoveWhere(order => order.PONumber == po);
-        System.Console.WriteLine("Successfully removed Order");
+        Console.WriteLine("Successfully removed Order");
     }
 
     // intend for plaintext json database

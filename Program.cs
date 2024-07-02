@@ -4,7 +4,7 @@ var orders = new OrderCurrier();
 
 while (true)
 {
-    System.Console.WriteLine("What would you like to do?");
+    Console.WriteLine("What would you like to do?");
     var input = Console.ReadLine();
 
     switch (input)
@@ -56,7 +56,7 @@ void AddOrders()
     bool check = false;
     do
     {
-        System.Console.WriteLine("Is the order pulled?");
+        Console.WriteLine("Is the order pulled?");
         var checkedIn = Console.ReadLine();
 
         if (checkedIn == "t" || checkedIn == "T" || checkedIn == "Y" || checkedIn == "y")
@@ -79,7 +79,7 @@ void AddOrders()
 
     do
     {
-        System.Console.WriteLine("What shipping method? (\"S\", \"C\", \"B\")");
+        Console.WriteLine("What shipping method? (\"S\", \"C\", \"B\")");
         var methodIn = Console.ReadLine();
 
         if (methodIn == "S"|| methodIn == "s")
@@ -124,11 +124,11 @@ void FindOrder()
 {
     do
     {
-        System.Console.WriteLine("Sales Order or PO Number");
+        Console.WriteLine("Sales Order or PO Number");
         var response = Console.ReadLine();
         if (response == "S" || response == "s")
         {
-            System.Console.WriteLine("Enter The Order Number");
+            Console.WriteLine("Enter The Order Number");
             var input = Console.ReadLine();
             uint result;
 
@@ -136,11 +136,11 @@ void FindOrder()
             if (success)
                 orders.GetOrder(result);
             else
-                System.Console.WriteLine("Failed to find order");
+                Console.WriteLine("Failed to find order");
         } 
         else if (response == "P" || response == "p")
         {
-            System.Console.WriteLine("Enter The PO Number");
+            Console.WriteLine("Enter The PO Number");
             var input = Console.ReadLine();
             uint result;
 
@@ -148,7 +148,7 @@ void FindOrder()
             if (success)
                 orders.GetOrder(result);
             else
-                System.Console.WriteLine("Failed to find order");
+                Console.WriteLine("Failed to find order");
         }
 
     } while (true);
