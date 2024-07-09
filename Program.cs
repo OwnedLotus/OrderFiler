@@ -12,6 +12,9 @@ while (true)
         case "list":
             orders.DisplayAllOrders();
         break;
+        case "select":
+            SelectOrder();
+        break;
         case "search":
             FindOrder();
         break;
@@ -124,6 +127,45 @@ void FindOrder()
 {
     do
     {
+        Console.WriteLine("Sales Order, PO Number, Shipping Method");
+        var response = Console.ReadLine();
+        switch (response)
+        {
+            case "s":
+                FindBySO();
+            break;
+            case "S":
+                FindBySO();
+            break;
+            case "P":
+                FindByPO();
+            break;
+            case "p":
+                FindByPO();
+            break;
+            case "M":
+                ControlFlowMethod();
+            break;
+            case "m":
+                ControlFlowMethod();
+            break;
+            
+            default:
+            break;
+        }
+
+    } while (true);
+}
+
+void RemoveMenu()
+{
+
+}
+
+void EditOrder()
+{
+    do
+    {
         Console.WriteLine("Sales Order or PO Number");
         var response = Console.ReadLine();
         if (response == "S" || response == "s")
@@ -154,12 +196,85 @@ void FindOrder()
     } while (true);
 }
 
-void RemoveMenu()
+void SelectOrder()
 {
+    do 
+    {
+        System.Console.WriteLine("\'D\'isplay, \'E\'dit?");
+        var input = Console.ReadLine();
 
+        switch (input)
+        {
+            case "D":
+                FindOrder();
+            break;
+            case "d":
+                FindOrder();
+            break;
+            case "E":
+                EditOrder();
+            break;
+            case "e":
+                EditOrder();
+            break;
+        }
+
+    } while(true);
 }
 
-void EditOrder()
+void ControlFlowMethod()
 {
-    throw new NotImplementedException();
+        Console.WriteLine("Enter the Shipping Method (\'S\', \'B\', \'C\')");
+        var input = Console.ReadLine();
+
+        switch (input)
+        {
+            case "s":
+                orders.SelectMethod(ShippingMethod.SHIPPING);
+            break;
+            case "S":
+                orders.SelectMethod(ShippingMethod.SHIPPING);
+            break;
+            case "B":
+                orders.SelectMethod(ShippingMethod.BACKORDER);
+            break;
+            case "b":
+                orders.SelectMethod(ShippingMethod.BACKORDER);
+            break;
+            case "C":
+                orders.SelectMethod(ShippingMethod.CPUP);
+            break;
+            case "c":
+                orders.SelectMethod(ShippingMethod.CPUP);
+            break;
+            default:
+            break;
+        }
+}
+
+void FindByPO()
+{
+    Console.WriteLine("Enter The PO Number");
+    var input = Console.ReadLine();
+
+    uint result;
+
+    var success = uint.TryParse(input, out result);
+    if (success)
+        orders.GetOrder(result);
+    else
+        Console.WriteLine("Failed to find order");
+}
+
+void FindBySO()
+{
+    Console.WriteLine("Enter The Order Number");
+    var input = Console.ReadLine();
+    uint result;
+
+    bool success = uint.TryParse(input, out result);
+    if (success)
+        orders.GetOrder(result);
+    else
+        Console.WriteLine("Failed to find order");
 }

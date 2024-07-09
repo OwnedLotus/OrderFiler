@@ -48,6 +48,13 @@ class OrderCurrier
         var order = orderSet.Single(ord => ord.PONumber == ponumber);
     }
 
+    public IEnumerable<Order> SelectMethod(ShippingMethod method)
+    {
+        return from order in orderSet
+                    where order.Method == method
+                    select order;
+    }
+
     public void RemoveOrder(uint ordernum)
     {
         orderSet.RemoveWhere(order => order.OrderNumber == ordernum);

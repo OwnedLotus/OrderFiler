@@ -35,10 +35,6 @@ class Order(uint on, string po, bool ip, ShippingMethod m) : IComparable<Order>
 
     public void DisplayOrder()
     {
-        // System.Console.WriteLine(JsonSerializer.Serialize(this));
-
-
-
-        // System.Console.WriteLine($"{this.OrderNumber} / {this.PONumber} / Shipping: {this.Method} / Pulled? {this.IsPulled}");
+        System.Console.WriteLine($"{this.OrderNumber} / {this.PONumber} / Shipping: {this.Method} / Pulled? {this.IsPulled}");
     }
 }
