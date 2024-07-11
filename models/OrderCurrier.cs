@@ -1,16 +1,17 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OrderFiler.Models;
 
 class OrderCurrier
 {
     string jsonOrderCollection = String.Empty;
-    private SortedSet<Order> orderSet;
-    private string pathToDB = Environment.CurrentDirectory.ToString() + "database.json";
+    private SortedSet<Order?> orderSet;
+    private string pathToDB =  Directory.GetCurrentDirectory() + "/database.json";
 
     public OrderCurrier()
     {
-        orderSet = new SortedSet<Order>();
+        orderSet = new SortedSet<Order?>();
     }
 
     public bool AddOrder(Order order)
@@ -39,13 +40,13 @@ class OrderCurrier
 
     public void GetOrder(uint ordernum)
     {
-        var order = orderSet.Single(ord => ord.OrderNumber == ordernum);
-        order.DisplayOrder();
+        var order = orderSet.Single(ord => ord?.OrderNumber == ordernum);
+        order?.DisplayOrder();
     }
 
     public void GetOrder(string ponumber)
     {
-        var order = orderSet.Single(ord => ord.PONumber == ponumber);
+        var order = orderSet.Single(ord => ord?.PONumber == ponumber);
     }
 
     public IEnumerable<Order> SelectMethod(ShippingMethod method)
@@ -71,19 +72,13 @@ class OrderCurrier
     // there is no need for security
     public void SaveOrders()
     {
-        foreach (var order in orderSet)
-        {
-            jsonOrderCollection += JsonSerializer.Serialize(order);
-            jsonOrderCollection += '\n';
-        }
-
-        File.WriteAllText(jsonOrderCollection, pathToDB);
+        File.WriteAllText(pathToDB, JsonSerializer.Serialize(orderSet));
     }
 
     public void LoadOrders()
     {
-        File.ReadAllLines(pathToDB);
-
-
+        jsonOrderCollection = File.ReadAllText(pathToDB);
+        JsonSerializerOptions options = new();
+        orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(jsonOrderCollection, options)!;
     }
 }

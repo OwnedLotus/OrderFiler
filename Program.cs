@@ -27,6 +27,12 @@ while (true)
         case "add":
             AddOrders();
         break;
+        case "save":
+            orders.SaveOrders();
+        break;
+        case "forceload":
+            orders.LoadOrders();
+            break;
         case "quit":
             QuitProgram();
         break;
