@@ -46,7 +46,7 @@ class OrderCurrier
 
     public void GetOrder(string ponumber)
     {
-        var order = orderSet.Single(ord => ord?.PONumber == ponumber);
+        var order = orderSet.Single(ord => ord?.PoNumber == ponumber);
     }
 
     public IEnumerable<Order> SelectMethod(ShippingMethod method)
@@ -64,7 +64,7 @@ class OrderCurrier
 
     public void RemoveOrder(string po)
     {
-        orderSet.RemoveWhere(order => order.PONumber == po);
+        orderSet.RemoveWhere(order => order.PoNumber == po);
         Console.WriteLine("Successfully removed Order");
     }
 
@@ -72,13 +72,28 @@ class OrderCurrier
     // there is no need for security
     public void SaveOrders()
     {
-        File.WriteAllText(pathToDB, JsonSerializer.Serialize(orderSet));
+        var stream = File.Open(pathToDB, FileMode.CreateNew);
+
+        foreach (var order in orderSet)
+        {
+            jsonOrderCollection += JsonSerializer.Serialize(order);
+            jsonOrderCollection +="\n";
+        }
+
+        File.WriteAllText(pathToDB, jsonOrderCollection);
+    
+        stream.Close();
     }
 
     public void LoadOrders()
     {
-        jsonOrderCollection = File.ReadAllText(pathToDB);
-        JsonSerializerOptions options = new();
-        orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(jsonOrderCollection, options)!;
+        var orders = File.ReadAllText(pathToDB);
+
+        var splitOrders = orders.Split('\n');
+
+        foreach (var order in splitOrders)
+        {
+            orderSet.Add(JsonSerializer.Deserialize<Order?>(order));
+        }
     }
 }

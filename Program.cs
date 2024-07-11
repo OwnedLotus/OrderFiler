@@ -120,7 +120,7 @@ void AddOrders()
     if (success)
     {
         if (PONumberIn is not null)
-            orders.AddOrder(new Order(parsedValue, PONumberIn, check, method));
+            orders.AddOrder(new Order(check, parsedValue, PONumberIn, method, DateTime.Now));
         else
             Console.WriteLine("PO is null");
     }
