@@ -70,9 +70,9 @@ class OrderCurrier
 
     // intend for plaintext json database
     // there is no need for security
-    public void SaveOrders()
+    public async void SaveOrders()
     {
-        var stream = File.Open(pathToDB, FileMode.CreateNew);
+        using StreamWriter stream = new StreamWriter(pathToDB, false);
 
         foreach (var order in orderSet)
         {
@@ -80,20 +80,18 @@ class OrderCurrier
             jsonOrderCollection +="\n";
         }
 
-        File.WriteAllText(pathToDB, jsonOrderCollection);
     
         stream.Close();
     }
 
-    public void LoadOrders()
+    public async void LoadOrders()
     {
-        var orders = File.ReadAllText(pathToDB);
+        var orders = File.ReadAllTextAsync(pathToDB);
 
-        var splitOrders = orders.Split('\n');
 
-        foreach (var order in splitOrders)
-        {
-            orderSet.Add(JsonSerializer.Deserialize<Order?>(order));
-        }
+        // foreach (var order in splitOrders)
+        // {
+        //     orderSet.Add(JsonSerializer.Deserialize<Order?>(order));
+        // }
     }
 }
