@@ -49,6 +49,7 @@ while (true)
 
 void QuitProgram()
 {
+    orders.SaveOrders();
     Environment.Exit(0);
 }
 
