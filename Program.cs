@@ -2,6 +2,12 @@
 
 var orders = new OrderCurrier();
 
+Console.WriteLine("Loading Orders...");
+orders.LoadOrders();
+Console.WriteLine("Finished Loading Orders");
+
+orders.DisplayAllOrders();
+
 while (true)
 {
     Console.WriteLine("What would you like to do?");
@@ -40,7 +46,6 @@ while (true)
         break;
     }
 }
-
 
 void QuitProgram()
 {
@@ -165,7 +170,48 @@ void FindOrder()
 
 void RemoveMenu()
 {
+    Console.WriteLine("Sales Order or by PO");
+    var input = Console.ReadLine();
 
+    while (true)
+    {
+        if (input == "S" || input == "s")
+        {
+            RemoveSalesOrder();
+        }
+        else if (input == "P" || input == "p")
+        {
+            RemovePO();
+        }
+        else
+        {
+            Console.WriteLine("Failed to intemperate result: \'S\' or \'P\' or \'Q\'");
+        }
+    }
+}
+
+void RemoveSalesOrder()
+{
+    Console.WriteLine("Enter The Order Number");
+    var input = Console.ReadLine();
+    uint result;
+
+    var success = uint.TryParse(input, out result);
+    if (success)
+        orders.RemoveOrder(result);
+    else
+        Console.WriteLine("Failed to find order");
+}
+
+void RemovePO()
+{
+    Console.WriteLine("Enter The PO Number");
+    var input = Console.ReadLine();
+
+    if (input is not null)
+        orders.GetOrder(input);
+    else
+        Console.WriteLine("Failed to find order");
 }
 
 void EditOrder()
@@ -176,31 +222,40 @@ void EditOrder()
         var response = Console.ReadLine();
         if (response == "S" || response == "s")
         {
-            Console.WriteLine("Enter The Order Number");
-            var input = Console.ReadLine();
-            uint result;
-
-            var success = uint.TryParse(input, out result);
-            if (success)
-                orders.GetOrder(result);
-            else
-                Console.WriteLine("Failed to find order");
+            EditSalesOrder();
         } 
         else if (response == "P" || response == "p")
         {
-            Console.WriteLine("Enter The PO Number");
-            var input = Console.ReadLine();
-            uint result;
-
-            var success = uint.TryParse(input, out result);
-            if (success)
-                orders.GetOrder(result);
-            else
-                Console.WriteLine("Failed to find order");
+            EditPO();
         }
 
     } while (true);
 }
+
+void EditSalesOrder()
+{
+    Console.WriteLine("Enter The Order Number");
+    var input = Console.ReadLine();
+    uint result;
+
+    var success = uint.TryParse(input, out result);
+    if (success)
+        orders.GetOrder(result);
+    else
+        Console.WriteLine("Failed to find order");
+}
+
+void EditPO()
+{
+    Console.WriteLine("Enter The PO Number");
+    var input = Console.ReadLine();
+
+    if (input is not null)
+        orders.GetOrder(input);
+    else
+        Console.WriteLine("Failed to find order");
+}
+
 
 void SelectOrder()
 {
@@ -209,22 +264,18 @@ void SelectOrder()
         System.Console.WriteLine("\'D\'isplay, \'E\'dit?");
         var input = Console.ReadLine();
 
-        switch (input)
+        if (input == "D" || input == "d")
         {
-            case "D":
-                FindOrder();
-            break;
-            case "d":
-                FindOrder();
-            break;
-            case "E":
-                EditOrder();
-            break;
-            case "e":
-                EditOrder();
-            break;
+            FindOrder();
         }
-
+        else if (input == "E" || input == "e")
+        {
+            EditOrder();
+        }
+        else
+        {
+            Console.WriteLine("Failed to interpret input");
+        }
     } while(true);
 }
 

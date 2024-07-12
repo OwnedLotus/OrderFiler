@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace OrderFiler.Models;
 
@@ -33,20 +32,23 @@ class OrderCurrier
         Console.WriteLine("---------------------------");
         foreach (var order in orderSet)
         {
-            order.DisplayOrder();
+            if(order is not null)
+                order.DisplayOrder();
         }
         Console.WriteLine("---------------------------");
     }
 
-    public void GetOrder(uint ordernum)
+    public void GetOrder(uint orderNum)
     {
-        var order = orderSet.Single(ord => ord?.OrderNumber == ordernum);
+        var order = orderSet.Single(ord => ord?.OrderNumber == orderNum);
         order?.DisplayOrder();
     }
 
-    public void GetOrder(string ponumber)
+    public void GetOrder(string poNumber)
     {
-        var order = orderSet.Single(ord => ord?.PoNumber == ponumber);
+        var order = orderSet.Single(ord => ord?.PoNumber == poNumber);
+        if (order is not null)
+            order.DisplayOrder();
     }
 
     public IEnumerable<Order> SelectMethod(ShippingMethod method)
@@ -56,16 +58,22 @@ class OrderCurrier
                     select order;
     }
 
-    public void RemoveOrder(uint ordernum)
+    public void RemoveOrder(uint orderNum)
     {
-        orderSet.RemoveWhere(order => order.OrderNumber == ordernum);
-        Console.WriteLine("Successfully removed Order");
+        var num = orderSet.RemoveWhere(order => order?.OrderNumber == orderNum);
+        if (num != 0)
+        Console.WriteLine("Successfully removed Orders");
+        else
+        Console.WriteLine("Failed to remove orders");
     }
 
     public void RemoveOrder(string po)
     {
-        orderSet.RemoveWhere(order => order.PoNumber == po);
+        var num = orderSet.RemoveWhere(order => order?.PoNumber == po);
+        if (num != 0)
         Console.WriteLine("Successfully removed Order");
+        else
+        Console.WriteLine("Failed to remove order");
     }
 
     // intend for plaintext json database

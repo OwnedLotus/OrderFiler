@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace OrderFiler.Models;
@@ -39,6 +38,6 @@ class Order : IComparable<Order>
 
     public void DisplayOrder()
     {
-        System.Console.WriteLine($"{this.OrderNumber} / {this.PoNumber} / Shipping: {this.Method} / Pulled? {this.IsPulled}");
+        System.Console.WriteLine($"{this.OrderNumber} / {this.PoNumber} / Shipping: {this.Method} / Pulled? {this.IsPulled} // Time Entered {this.OrderEntered}");
     }
 }
