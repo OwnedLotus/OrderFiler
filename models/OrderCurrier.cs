@@ -70,28 +70,18 @@ class OrderCurrier
 
     // intend for plaintext json database
     // there is no need for security
-    public async void SaveOrders()
+    public void SaveOrders()
     {
-        using StreamWriter stream = new StreamWriter(pathToDB, false);
+        var serializedOrders = JsonSerializer.Serialize<SortedSet<Order?>>(orderSet);
 
-        foreach (var order in orderSet)
-        {
-            jsonOrderCollection += JsonSerializer.Serialize(order);
-            jsonOrderCollection +="\n";
-        }
-
-    
-        stream.Close();
+        File.Delete(pathToDB);   
+        File.WriteAllText(pathToDB, serializedOrders);
     }
 
-    public async void LoadOrders()
+    public void LoadOrders()
     {
-        var orders = File.ReadAllTextAsync(pathToDB);
+        var serializedOrders = File.ReadAllText(pathToDB);
 
-
-        // foreach (var order in splitOrders)
-        // {
-        //     orderSet.Add(JsonSerializer.Deserialize<Order?>(order));
-        // }
+        orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(serializedOrders)!;
     }
 }
