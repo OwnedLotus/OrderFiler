@@ -88,8 +88,15 @@ class OrderCurrier
 
     public void LoadOrders()
     {
-        var serializedOrders = File.ReadAllText(pathToDB);
+        if(File.Exists(pathToDB))
+        {
+            var serializedOrders = File.ReadAllText(pathToDB);
 
-        orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(serializedOrders)!;
+            orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(serializedOrders)!;
+        }
+        else
+        {
+            Console.WriteLine("Nothing to load");
+        }
     }
 }

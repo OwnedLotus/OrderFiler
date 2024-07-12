@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using OrderFiler.Models;
+﻿using OrderFiler.Models;
 
 var orders = new OrderCurrier();
 
@@ -25,7 +24,7 @@ while (true)
         case "search":
             FindOrder();
         break;
-        case "Edit":
+        case "edit":
             EditOrder();
             break;
         case "remove":
@@ -163,11 +162,11 @@ void FindOrder()
 
 void RemoveMenu()
 {
-    Console.WriteLine("Sales Order or by PO");
-    var input = Console.ReadLine();
 
     while (true)
     {
+        Console.WriteLine("Sales Order or by PO");
+        var input = Console.ReadLine();
         if (input == "S" || input == "s")
         {
             RemoveSalesOrder();
@@ -196,6 +195,8 @@ void RemoveSalesOrder()
     var success = uint.TryParse(input, out result);
     if (success)
         orders.RemoveOrder(result);
+    else if (input == "q" || input == "Q")
+    return;
     else
         Console.WriteLine("Failed to find order");
 }
@@ -207,6 +208,8 @@ void RemovePO()
 
     if (input is not null)
         orders.GetOrder(input);
+    else if (input == "q" || input == "Q")
+    return;
     else
         Console.WriteLine("Failed to find order");
 }
@@ -250,6 +253,8 @@ void EditSalesOrder()
         success = uint.TryParse(input, out result);
         if (success)
             orders.GetOrder(result);
+        else if (input == "q" || input == "Q")
+        return;
         else
             Console.WriteLine("Failed to find order");
     } while(!success);
@@ -268,6 +273,8 @@ void EditPO()
             orders.GetOrder(input);
             success = true;
         }
+        else if (input == "q" || input == "Q")
+            return;
         else
             Console.WriteLine("Failed to find order");
     } while (!success);
@@ -348,6 +355,8 @@ void FindByPO()
     var success = uint.TryParse(input, out result);
     if (success)
         orders.GetOrder(result);
+    else if (input == "q" || input == "Q")
+    return;
     else
         Console.WriteLine("Failed to find order");
 }
@@ -361,6 +370,8 @@ void FindBySO()
     bool success = uint.TryParse(input, out result);
     if (success)
         orders.GetOrder(result);
+    else if (input == "q" || input == "Q")
+    return;
     else
         Console.WriteLine("Failed to find order");
 }
