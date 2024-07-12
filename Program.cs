@@ -1,4 +1,5 @@
-﻿using OrderFiler.Models;
+﻿using System.Diagnostics;
+using OrderFiler.Models;
 
 var orders = new OrderCurrier();
 
@@ -140,31 +141,23 @@ void FindOrder()
     {
         Console.WriteLine("Sales Order, PO Number, Shipping Method");
         var response = Console.ReadLine();
-        switch (response)
-        {
-            case "s":
-                FindBySO();
-            break;
-            case "S":
-                FindBySO();
-            break;
-            case "P":
-                FindByPO();
-            break;
-            case "p":
-                FindByPO();
-            break;
-            case "M":
-                ControlFlowMethod();
-            break;
-            case "m":
-                ControlFlowMethod();
-            break;
-            
-            default:
-            break;
-        }
 
+        if (response == "S" || response == "s")
+        {
+            FindBySO();
+        } 
+        else if (response == "P" || response == "p")
+        {
+            FindByPO();
+        }
+        else if (response == "M" || response == "m")
+        {
+            ControlFlowMethod();
+        }
+        else if (response == "q" || response == "Q")
+        {
+            return;
+        }
     } while (true);
 }
 
@@ -182,6 +175,10 @@ void RemoveMenu()
         else if (input == "P" || input == "p")
         {
             RemovePO();
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
         }
         else
         {
@@ -216,6 +213,8 @@ void RemovePO()
 
 void EditOrder()
 {
+    bool success = false;
+
     do
     {
         Console.WriteLine("Sales Order or PO Number");
@@ -223,42 +222,61 @@ void EditOrder()
         if (response == "S" || response == "s")
         {
             EditSalesOrder();
+            success = true;
         } 
         else if (response == "P" || response == "p")
         {
             EditPO();
+            success = true;
+        }
+        else if (response == "q" || response == "Q")
+        {
+            return;
         }
 
-    } while (true);
+    } while (!success);
 }
 
 void EditSalesOrder()
 {
-    Console.WriteLine("Enter The Order Number");
-    var input = Console.ReadLine();
-    uint result;
+    bool success = false;
 
-    var success = uint.TryParse(input, out result);
-    if (success)
-        orders.GetOrder(result);
-    else
-        Console.WriteLine("Failed to find order");
+    do
+    {
+        Console.WriteLine("Enter The Order Number");
+        var input = Console.ReadLine();
+        uint result;
+
+        success = uint.TryParse(input, out result);
+        if (success)
+            orders.GetOrder(result);
+        else
+            Console.WriteLine("Failed to find order");
+    } while(!success);
 }
 
 void EditPO()
 {
-    Console.WriteLine("Enter The PO Number");
-    var input = Console.ReadLine();
+    bool success = false;
+    do
+    {
+        Console.WriteLine("Enter The PO Number");
+        var input = Console.ReadLine();
 
-    if (input is not null)
-        orders.GetOrder(input);
-    else
-        Console.WriteLine("Failed to find order");
+        if (input is not null)
+        {
+            orders.GetOrder(input);
+            success = true;
+        }
+        else
+            Console.WriteLine("Failed to find order");
+    } while (!success);
 }
 
 
 void SelectOrder()
 {
+    bool success = false;
     do 
     {
         System.Console.WriteLine("\'D\'isplay, \'E\'dit?");
@@ -267,46 +285,57 @@ void SelectOrder()
         if (input == "D" || input == "d")
         {
             FindOrder();
+            success = true;
         }
         else if (input == "E" || input == "e")
         {
             EditOrder();
+            success = true;
+        }
+        else if (input == "q" || input == "Q")
+        {
+            return;
         }
         else
         {
             Console.WriteLine("Failed to interpret input");
         }
-    } while(true);
+    } while(!success);
 }
 
 void ControlFlowMethod()
 {
-        Console.WriteLine("Enter the Shipping Method (\'S\', \'B\', \'C\')");
-        var input = Console.ReadLine();
+    Console.WriteLine("Enter the Shipping Method (\'S\', \'B\', \'C\')");
+    var input = Console.ReadLine();
+    bool success = false;
 
-        switch (input)
+    do
+    {
+        if (input == "s" || input == "S")
         {
-            case "s":
-                orders.SelectMethod(ShippingMethod.SHIPPING);
-            break;
-            case "S":
-                orders.SelectMethod(ShippingMethod.SHIPPING);
-            break;
-            case "B":
-                orders.SelectMethod(ShippingMethod.BACKORDER);
-            break;
-            case "b":
-                orders.SelectMethod(ShippingMethod.BACKORDER);
-            break;
-            case "C":
-                orders.SelectMethod(ShippingMethod.CPUP);
-            break;
-            case "c":
-                orders.SelectMethod(ShippingMethod.CPUP);
-            break;
-            default:
-            break;
+            orders.SelectMethod(ShippingMethod.SHIPPING);
+            success = true;
+        } 
+        else if (input == "B" || input == "b")
+        {
+            orders.SelectMethod(ShippingMethod.BACKORDER);
+            success = true;
+        } 
+        else if (input == "C" || input == "c")
+        {
+            orders.SelectMethod(ShippingMethod.CPUP);
+            success = true;
         }
+        else if (input == "q" || input == "Q")
+        {
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Failed to interpret input");
+
+        }
+    } while (!success);
 }
 
 void FindByPO()
