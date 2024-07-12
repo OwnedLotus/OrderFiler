@@ -80,7 +80,9 @@ class OrderCurrier
     // there is no need for security
     public void SaveOrders()
     {
-        var serializedOrders = JsonSerializer.Serialize<SortedSet<Order?>>(orderSet);
+        JsonSerializerOptions options = new JsonSerializerOptions();
+        options.WriteIndented = true;
+        var serializedOrders = JsonSerializer.Serialize<SortedSet<Order?>>(orderSet, options);
 
         File.Delete(pathToDB);   
         File.WriteAllText(pathToDB, serializedOrders);
@@ -91,6 +93,7 @@ class OrderCurrier
         if(File.Exists(pathToDB))
         {
             var serializedOrders = File.ReadAllText(pathToDB);
+           
 
             orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(serializedOrders)!;
         }
