@@ -280,7 +280,6 @@ void EditPO()
     } while (!success);
 }
 
-
 void SelectOrder()
 {
     bool success = false;
