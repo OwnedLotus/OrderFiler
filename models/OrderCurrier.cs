@@ -40,15 +40,20 @@ class OrderCurrier
 
     public void GetOrder(uint orderNum)
     {
-        var order = orderSet.Single(ord => ord?.OrderNumber == orderNum);
-        order?.DisplayOrder();
+        var order = orderSet.SingleOrDefault(ord => ord?.OrderNumber == orderNum);
+        if (order is not null)
+            order.DisplayOrder();
+        else
+            Console.WriteLine("Order not found");
     }
 
     public void GetOrder(string poNumber)
     {
-        var order = orderSet.Single(ord => ord?.PoNumber == poNumber);
+        var order = orderSet.SingleOrDefault(ord => ord?.PoNumber == poNumber);
         if (order is not null)
             order.DisplayOrder();
+        else
+            Console.WriteLine("Order not Found");
     }
 
     public IEnumerable<Order> SelectMethod(ShippingMethod method)
