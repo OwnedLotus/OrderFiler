@@ -315,22 +315,23 @@ void ControlFlowMethod()
     Console.WriteLine("Enter the Shipping Method (\'S\', \'B\', \'C\')");
     var input = Console.ReadLine();
     bool success = false;
+    List<Order?> foundOrders = new();
 
     do
     {
         if (input == "s" || input == "S")
         {
-            orders.SelectMethod(ShippingMethod.SHIPPING);
+            foundOrders = orders.SelectMethod(ShippingMethod.SHIPPING).ToList()!;
             success = true;
         } 
         else if (input == "B" || input == "b")
         {
-            orders.SelectMethod(ShippingMethod.BACKORDER);
+            foundOrders = orders.SelectMethod(ShippingMethod.BACKORDER).ToList()!;
             success = true;
         } 
         else if (input == "C" || input == "c")
         {
-            orders.SelectMethod(ShippingMethod.CPUP);
+            foundOrders = orders.SelectMethod(ShippingMethod.CPUP).ToList()!;
             success = true;
         }
         else if (input == "q" || input == "Q")
@@ -342,6 +343,11 @@ void ControlFlowMethod()
             Console.WriteLine("Failed to interpret input");
 
         }
+
+        foreach (var order in foundOrders)
+        {
+            order?.DisplayOrder();
+        }
     } while (!success);
 }
 
@@ -349,16 +355,22 @@ void FindByPO()
 {
     Console.WriteLine("Enter The PO Number");
     var input = Console.ReadLine();
+    Order? foundOrder = null;
 
     uint result;
 
     var success = uint.TryParse(input, out result);
     if (success)
-        orders.GetOrder(result);
+        foundOrder = orders.GetOrder(result);
     else if (input == "q" || input == "Q")
     return;
     else
         Console.WriteLine("Failed to find order");
+    
+    if (foundOrder is not null)
+    {
+        foundOrder.DisplayOrder();
+    }
 }
 
 void FindBySO()
@@ -366,12 +378,18 @@ void FindBySO()
     Console.WriteLine("Enter The Order Number");
     var input = Console.ReadLine();
     uint result;
+    Order? foundOrder = null;
 
     bool success = uint.TryParse(input, out result);
     if (success)
-        orders.GetOrder(result);
+        foundOrder = orders.GetOrder(result);
     else if (input == "q" || input == "Q")
     return;
     else
         Console.WriteLine("Failed to find order");
+
+    if (foundOrder is not null)
+    {
+        foundOrder.DisplayOrder();
+    }
 }

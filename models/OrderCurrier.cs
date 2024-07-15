@@ -38,22 +38,28 @@ class OrderCurrier
         Console.WriteLine("---------------------------");
     }
 
-    public void GetOrder(uint orderNum)
+    public Order? GetOrder(uint orderNum)
     {
         var order = orderSet.SingleOrDefault(ord => ord?.OrderNumber == orderNum);
         if (order is not null)
-            order.DisplayOrder();
+            return order;
         else
+        {
             Console.WriteLine("Order not found");
+            return null;
+        }
     }
 
-    public void GetOrder(string poNumber)
+    public Order? GetOrder(string poNumber)
     {
         var order = orderSet.SingleOrDefault(ord => ord?.PoNumber == poNumber);
         if (order is not null)
-            order.DisplayOrder();
+            return order;
         else
+        {
             Console.WriteLine("Order not Found");
+            return null;
+        }
     }
 
     public IEnumerable<Order> SelectMethod(ShippingMethod method)
