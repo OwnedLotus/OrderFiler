@@ -57,81 +57,78 @@ void AddOrders()
 {
     while (true)
     {
-    Console.WriteLine("Please Enter an Order Number");
-    var OrderNumberIn = Console.ReadLine();
+        Console.WriteLine("Please Enter an Order Number");
+        var OrderNumberIn = Console.ReadLine();
 
-    if (OrderNumberIn == "exit") return;
+        if (OrderNumberIn == "exit") return;
+        var success = uint.TryParse(OrderNumberIn, out uint parsedValue);
+        orders.GetOrder(parsedValue);
+
+        Console.WriteLine("Please Enter the PO Number");
+        var PONumberIn = Console.ReadLine();
 
 
-    Console.WriteLine("Please Enter the PO Number");
-    var PONumberIn = Console.ReadLine();
-
-
-    var failed = true;
-    bool check = false;
-    do
-    {
-        Console.WriteLine("Is the order pulled?");
-        var checkedIn = Console.ReadLine();
-
-        if (checkedIn == "t" || checkedIn == "T" || checkedIn == "Y" || checkedIn == "y")
+        var failed = true;
+        bool check = false;
+        do
         {
-            check = true;
-            failed = false;
-        } else if (checkedIn == "f" || checkedIn == "F" || checkedIn == "N" || checkedIn =="n")
+            Console.WriteLine("Is the order pulled?");
+            var checkedIn = Console.ReadLine();
+
+            if (checkedIn == "t" || checkedIn == "T" || checkedIn == "Y" || checkedIn == "y")
+            {
+                check = true;
+                failed = false;
+            } else if (checkedIn == "f" || checkedIn == "F" || checkedIn == "N" || checkedIn =="n")
+            {
+                check = false;
+                failed = false;
+            }
+            else
+            {
+                failed = true;
+            }
+        } while (failed);
+
+        ShippingMethod method = ShippingMethod.CPUP;
+        failed = true;
+
+        do
         {
-            check = false;
-            failed = false;
+            Console.WriteLine("What shipping method? (\"S\", \"C\", \"B\")");
+            var methodIn = Console.ReadLine();
+
+            if (methodIn == "S"|| methodIn == "s")
+            {
+                method = ShippingMethod.SHIPPING;
+                failed = false;
+            }
+            if (methodIn == "C" || methodIn == "c")
+            {
+                method = ShippingMethod.CPUP;
+                failed = false;
+            }
+            if (methodIn == "B" || methodIn == "b")
+            {
+                method = ShippingMethod.BACKORDER;
+                failed = false;
+            }
+        } while (failed);
+
+
+        if (OrderNumberIn is not null)
+            success = OrderNumberIn.Length == 8;
+
+
+        if (success)
+        {
+            if (PONumberIn is not null)
+                orders.AddOrder(new Order(check, parsedValue, PONumberIn, method, DateTime.Now));
+            else
+                Console.WriteLine("PO is null");
         }
         else
-        {
-            failed = true;
-        }
-    } while (failed);
-
-    ShippingMethod method = ShippingMethod.CPUP;
-    failed = true;
-
-    do
-    {
-        Console.WriteLine("What shipping method? (\"S\", \"C\", \"B\")");
-        var methodIn = Console.ReadLine();
-
-        if (methodIn == "S"|| methodIn == "s")
-        {
-            method = ShippingMethod.SHIPPING;
-            failed = false;
-        }
-        if (methodIn == "C" || methodIn == "c")
-        {
-            method = ShippingMethod.CPUP;
-            failed = false;
-        }
-        if (methodIn == "B" || methodIn == "b")
-        {
-            method = ShippingMethod.BACKORDER;
-            failed = false;
-        }
-    } while (failed);
-
-
-    uint parsedValue = 1;
-    bool success = false;
-
-    if (OrderNumberIn is not null)
-        success = OrderNumberIn.Length == 8;
-
-    success = uint.TryParse(OrderNumberIn, out parsedValue);
-
-    if (success)
-    {
-        if (PONumberIn is not null)
-            orders.AddOrder(new Order(check, parsedValue, PONumberIn, method, DateTime.Now));
-        else
-            Console.WriteLine("PO is null");
-    }
-    else
-        Console.WriteLine("Order Failed to be registered");
+            Console.WriteLine("Order Failed to be registered");
     }
 }
 
