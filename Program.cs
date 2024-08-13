@@ -3,7 +3,7 @@
 var orders = new OrderCurrier();
 
 Console.WriteLine("Loading Orders...");
-orders.LoadOrders();
+await orders.LoadOrders();
 Console.WriteLine("Finished Loading Orders");
 
 orders.DisplayAllOrders();
@@ -37,7 +37,7 @@ while (true)
             orders.SaveOrders();
         break;
         case "forceload":
-            orders.LoadOrders();
+            await orders.LoadOrders();
             break;
         case "quit":
             QuitProgram();
@@ -60,7 +60,7 @@ void AddOrders()
         Console.WriteLine("Please Enter an Order Number");
         var OrderNumberIn = Console.ReadLine();
 
-        if (OrderNumberIn == "exit") return;
+        if (OrderNumberIn?.ToLower() == "quit") return;
         var success = uint.TryParse(OrderNumberIn, out uint parsedValue);
         orders.GetOrder(parsedValue);
 

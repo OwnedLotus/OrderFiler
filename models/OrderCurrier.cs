@@ -99,11 +99,11 @@ class OrderCurrier
         File.WriteAllText(pathToDB, serializedOrders);
     }
 
-    public void LoadOrders()
+    public async Task<Task> LoadOrders()
     {
         if(File.Exists(pathToDB))
         {
-            var serializedOrders = File.ReadAllText(pathToDB);
+            var serializedOrders = await File.ReadAllTextAsync(pathToDB);
            
 
             orderSet = JsonSerializer.Deserialize<SortedSet<Order?>>(serializedOrders)!;
@@ -112,5 +112,7 @@ class OrderCurrier
         {
             Console.WriteLine("Nothing to load");
         }
+
+        return Task.CompletedTask;
     }
 }
