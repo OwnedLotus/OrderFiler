@@ -87,6 +87,11 @@ class OrderCurrier
         Console.WriteLine("Failed to remove order");
     }
 
+    public bool ReplaceOrder(Order? order)
+    {
+        return false;
+    }
+
     // intend for plaintext json database
     // there is no need for security
     public void SaveOrders()

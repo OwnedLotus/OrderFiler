@@ -214,28 +214,33 @@ void RemovePO()
 
 void EditOrder()
 {
-    bool success = false;
+    
 
-    do
-    {
-        Console.WriteLine("Sales Order or PO Number");
-        var response = Console.ReadLine();
-        if (response == "S" || response == "s")
-        {
-            EditSalesOrder();
-            success = true;
-        } 
-        else if (response == "P" || response == "p")
-        {
-            EditPO();
-            success = true;
-        }
-        else if (response == "q" || response == "Q")
-        {
-            return;
-        }
 
-    } while (!success);
+
+
+    // bool success = false;
+
+    // do
+    // {
+    //     Console.WriteLine("Sales Order or PO Number");
+    //     var response = Console.ReadLine();
+    //     if (response == "S" || response == "s")
+    //     {
+    //         EditSalesOrder();
+    //         success = true;
+    //     } 
+    //     else if (response == "P" || response == "p")
+    //     {
+    //         EditPO();
+    //         success = true;
+    //     }
+    //     else if (response == "q" || response == "Q")
+    //     {
+    //         return;
+    //     }
+
+    // } while (!success);
 }
 
 void EditSalesOrder()
