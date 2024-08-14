@@ -18,6 +18,9 @@ while (true)
         case "list":
             orders.DisplayAllOrders();
         break;
+        case "count":
+            Console.WriteLine($"The current number of order is: {orders.Count}");
+            break;
         case "select":
             SelectOrder();
         break;

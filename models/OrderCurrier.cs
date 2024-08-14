@@ -7,6 +7,7 @@ class OrderCurrier
     string jsonOrderCollection = String.Empty;
     private SortedSet<Order?> orderSet;
     private string pathToDB =  Directory.GetCurrentDirectory() + "/database.json";
+    public int Count { get => orderSet.Count; }  
 
     public OrderCurrier()
     {
