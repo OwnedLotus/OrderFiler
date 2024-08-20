@@ -8,4 +8,8 @@
     <Version>0.5.0</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Terminal.gui" Version="1.17.1" />
+  </ItemGroup>
+
 </Project>
