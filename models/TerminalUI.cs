@@ -22,7 +22,9 @@ public class TerminalUI : Window {
 
         var passwordLabel = new Label
         {
-            Text = "Password:", X = Pos.Left(usernameLabel), Y = Pos.Bottom(usernameLabel) + 1
+            Text = "Password:", 
+            X = Pos.Left(usernameLabel), 
+            Y = Pos.Bottom(usernameLabel) + 1
         };
 
         var passwordText = new TextField
