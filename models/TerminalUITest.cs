@@ -1,6 +1,6 @@
-using System;
 using Terminal.Gui;
 
+// Example page provided on project gh
 public class TerminalUI : Window {
     public static string? UserName;
 
@@ -47,6 +47,16 @@ public class TerminalUI : Window {
             X = Pos.Center(),
             IsDefault = true
         };
+
+        btnLogin.Clicked += () => {
+            if (userNameText.Text == "admin" && passwordText.Text == "password") {
+				MessageBox.Query ("Logging In", "Login Successful", "Ok");
+				Application.RequestStop ();
+			} else {
+				MessageBox.ErrorQuery ("Logging In", "Incorrect username or password", "Ok");
+			}
+        };
+
 
         // Add the views to the Window
         Add(usernameLabel, userNameText, passwordLabel, passwordText, btnLogin);
