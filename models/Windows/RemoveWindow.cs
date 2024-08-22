@@ -2,7 +2,7 @@ using Terminal.Gui;
 
 namespace OrderFiler.Models.Windows;
 
-class RemoveWindow : Window 
+class RemoveWindow(string title) : Window 
 {
     
 }

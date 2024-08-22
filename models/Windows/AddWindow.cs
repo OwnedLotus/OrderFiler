@@ -2,7 +2,7 @@ using Terminal.Gui;
 
 namespace OrderFiler.Models.Windows;
 
-class AddWindow : Window 
+class AddWindow(string title) : Window
 {
 
 }

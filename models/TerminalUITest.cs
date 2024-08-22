@@ -48,7 +48,7 @@ public class TerminalUI : Window {
             IsDefault = true
         };
 
-        btnLogin.Clicked += () => {
+        btnLogin.Accept += (s,e) => {
             if (userNameText.Text == "admin" && passwordText.Text == "password") {
 				MessageBox.Query ("Logging In", "Login Successful", "Ok");
 				Application.RequestStop ();

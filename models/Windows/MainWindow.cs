@@ -4,7 +4,6 @@ namespace OrderFiler.Models.Windows;
 
 class MainWindow : Window 
 {
-
     // button enter
     private Button addBtn;
 
@@ -20,9 +19,9 @@ class MainWindow : Window
     // auto updating scroll view
     private ScrollView orderView;
 
-    public MainWindow()
+    public MainWindow(string title)
     {
-        Title = $"Order Controller, {Application.QuitKey} to quit";
+        Title = title + $", {Application.QuitKey} to quit";
 
         var addLabel = new Label 
         { 
@@ -33,7 +32,9 @@ class MainWindow : Window
             Text = "Add",
             Y = Pos.Bottom(addLabel)
         };
-        addBtn.Clicked += Add_Clicked;
+        addBtn.Accept += (s, e) => {
+            addLabel.Text = "Button Pressed";
+        };
 
         var editLabel = new Label 
         {
@@ -47,7 +48,9 @@ class MainWindow : Window
             Y = Pos.Bottom(editLabel),
         };
 
-        editBtn.Clicked += Edit_Clicked;
+        editBtn.Accept += (s,e) => {
+            editLabel.Text = "Button Pressed";
+        };
 
         var removeLabel = new Label 
         {
@@ -61,7 +64,9 @@ class MainWindow : Window
             Y = Pos.Bottom(removeLabel),
         };
 
-        removeBtn.Clicked += Remove_Clicked;
+        removeBtn.Accept += (s, e) => {
+            removeLabel.Text = "Button Pressed";
+        };
 
         searchField = new TextField 
         {
@@ -79,20 +84,5 @@ class MainWindow : Window
 
         Add(editBtn, editLabel, addLabel, addBtn, removeLabel, removeBtn, searchField, orderView);
     
-    }
-
-    private void Add_Clicked()
-    {
-
-    }
-
-    private void Edit_Clicked()
-    {
-
-    }
-
-    private void Remove_Clicked()
-    {
-
     }
 }
