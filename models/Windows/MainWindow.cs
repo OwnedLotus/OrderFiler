@@ -18,11 +18,22 @@ class MainWindow : Window
     private TextField searchField;
 
     // auto updating scroll view
-    private ScrollBarView orderView;
+    private ScrollView orderView;
 
     public MainWindow()
     {
         Title = $"Order Controller, {Application.QuitKey} to quit";
+
+        var addLabel = new Label 
+        { 
+            Text = "Add an Order",
+        };
+        addBtn = new Button 
+        {
+            Text = "Add",
+            Y = Pos.Bottom(addLabel)
+        };
+        addBtn.Clicked += Add_Clicked;
 
         var editLabel = new Label 
         {
@@ -32,49 +43,56 @@ class MainWindow : Window
         editBtn = new Button 
         {
             Text = "Edit",
+            X = Pos.Center(),
             Y = Pos.Bottom(editLabel),
-            Width = Dim.Fill()
         };
 
-        var addLabel = new Label 
-        { 
-            Text = "Add an Order",
-            X = Pos.Left(editLabel)
-        };
-        addBtn = new Button 
-        {
-            Text = "Add",
-            X = Pos.Left(editLabel),
-            Y = Pos.Bottom(addLabel),
-            Width = Dim.Fill()
-        };
+        editBtn.Clicked += Edit_Clicked;
 
         var removeLabel = new Label 
         {
             Text = "Remove an Order",
-            X = Pos.Right(editLabel)
+            X = Pos.AnchorEnd(20)
         };
         removeBtn = new Button 
         {
             Text = "Remove",
-            X = Pos.Right(editBtn),
+            X = Pos.AnchorEnd(17),
             Y = Pos.Bottom(removeLabel),
+        };
+
+        removeBtn.Clicked += Remove_Clicked;
+
+        searchField = new TextField 
+        {
+            Y = Pos.Bottom(editBtn) + 1,
             Width = Dim.Fill()
         };
 
-        orderView = new ScrollBarView
+        orderView = new ScrollView()
         {
             Width = Dim.Fill(),
             Height = Dim.Fill(),
-            X = Pos.Center()
-        };
-        searchField = new TextField 
-        {
-            Text = "Search...",
             X = Pos.Center(),
-            Y = Pos.Bottom(editBtn),
+            Y = Pos.Bottom(searchField)
         };
 
-        Add(editLabel, editBtn, addLabel, addBtn, removeLabel, removeBtn, searchField);
+        Add(editBtn, editLabel, addLabel, addBtn, removeLabel, removeBtn, searchField, orderView);
+    
+    }
+
+    private void Add_Clicked()
+    {
+
+    }
+
+    private void Edit_Clicked()
+    {
+
+    }
+
+    private void Remove_Clicked()
+    {
+
     }
 }
