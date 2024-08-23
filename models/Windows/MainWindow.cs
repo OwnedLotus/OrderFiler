@@ -19,9 +19,24 @@ class MainWindow : Window
     // auto updating scroll view
     private ScrollView orderView;
 
-    public MainWindow(string title)
+    private AddWindow addWindow;
+    private EditWindow editWindow;
+    private RemoveWindow removeWindow;
+
+    public MainWindow()
     {
-        Title = title + $", {Application.QuitKey} to quit";
+        addWindow = new AddWindow("Add Window") {
+            CanFocus = true
+        };
+        editWindow = new EditWindow("Edit Window") {
+            CanFocus = true
+        };
+        removeWindow = new RemoveWindow("Remove Window") {
+            CanFocus = true
+        };
+
+
+        Title = $"Order Filer, {Application.QuitKey} to quit";
 
         var addLabel = new Label 
         { 
@@ -34,6 +49,11 @@ class MainWindow : Window
         };
         addBtn.Accept += (s, e) => {
             addLabel.Text = "Button Pressed";
+
+            // if(Application.OnKeyDown(Key.D)
+            RemoveAll();
+            addWindow.SuperView.SetFocus();
+            
         };
 
         var editLabel = new Label 

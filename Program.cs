@@ -3,47 +3,18 @@ using Terminal.Gui;
 using OrderFiler.Models.Windows;
 
 Application.Init();
-var top = Application.Top;
-var mainWindow = new MainWindow("Home Page"){
-    X = 0,
-    Y = 0,
-    Width = Dim.Fill(),
-    Height = Dim.Fill()! - 1
-};
-var addPage = new AddWindow("Add Orders"){
-    X = 0,
-    Y = 0,
-    Width = Dim.Fill(),
-    Height = Dim.Fill()! - 1
-};
-var editPage = new EditWindow("Edit Orders"){
-    X = 0,
-    Y = 0,
-    Width = Dim.Fill(),
-    Height = Dim.Fill()! - 1
-};
-var removePage = new RemoveWindow("Remove Orders"){
-    X = 0,
-    Y = 0,
-    Width = Dim.Fill(),
-    Height = Dim.Fill()! - 1
-};
 
-mainWindow.TabIndex = 0;
-addPage.TabIndex = 1;
-editPage.TabIndex = 2;
-removePage.TabIndex = 3;
 
-top?.Add(mainWindow);
+var mainWindow = new MainWindow();
+var addWindow = new AddWindow("Add Window");
+var editWindow = new EditWindow("Edit Window");
+var removeWindow = new RemoveWindow("Remove Window");
 
-var menu = new MenuBar(new MenuBarItem[]
-{
-    new MenuBarItem("Add Order","", () => {
-        mainWindow.RemoveAll();
+top?.Add(addWindow,editWindow,removeWindow);
 
-    })
-});
+Application.Begin(top);
 
+Application.Run();
 
 Application.Shutdown();
 
