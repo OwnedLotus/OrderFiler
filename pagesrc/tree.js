@@ -1,7 +1,38 @@
-class OrderNode {
-    constructor(salesOrderNumber, PONumber) {
+class Order {
+    constructor(salesOrderNumber, PONumber, date, method, isPulled) {
         this.salesOrderNumber = salesOrderNumber;
         this.PONumber = PONumber;
+        this.date = date;
+        this.method = method;
+        this.isPulled = isPulled;
+    }
+
+    getSalesOrderNumber() {
+        return this.salesOrderNumber;
+    }
+
+    getPONumber() {
+        return this.PONumber;
+    }
+
+    setSalesOrderNumber(soNumber) {
+        this.salesOrderNumber = soNumber;
+    }
+
+    setPONumber(poNumber) {
+        this.PONumber = poNumber;
+    }
+}
+
+const ShippingMethod = {
+    CPUP: 'CPUP',
+    BACKORDER: 'BACKORDER',
+    SHIPPING: 'SHIPPING',
+}
+
+class Node {
+    constructor(order) {
+        this.order = order;
         this.height = 1;
         this.right = null;
         this.left = null;
