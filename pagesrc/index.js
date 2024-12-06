@@ -1,6 +1,4 @@
-var order = Order(18021234, "hello", "TIME", ShippingMethod.CPUP, true);
-
-console.log(order);
+var order = new Order(18021234, "hello", "TIME", ShippingMethod.CPUP, true);
 
 class Order {
     constructor(salesOrderNumber, PONumber, date, method, isPulled) {
