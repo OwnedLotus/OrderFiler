@@ -9,7 +9,7 @@ public enum ShippingMethod
     SHIPPING
 }
 
-class Order : IComparable<Order>
+public class Order : IComparable<Order>
 {
     public bool IsPulled { get; set; }
     public uint OrderNumber { get; set; }
